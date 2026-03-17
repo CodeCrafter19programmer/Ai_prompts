@@ -1,0 +1,299 @@
+UI / UX PROMPT LIBRARY (PRODUCTION-GRADE)
+SECTION A — PAGE & LAYOUT DESIGN
+1. Full Page UI
+
+Design a responsive [PAGE NAME] page UI.
+User type: [who]
+Primary goal: [one action]
+Layout rules:
+- Mobile-first
+- Max width 1200px on desktop
+- Clear visual hierarchy
+Output:
+- Component breakdown
+- UX flow
+- Tailwind utility classes
+No placeholder explanations.
+
+
+2. Dashboard Layout
+
+Create a clean dashboard UI for [use case].
+Include:
+- Sidebar (collapsible)
+- Top navigation
+- Main content grid
+Follow accessibility best practices.
+Return React + TS + Tailwind code.
+
+
+3. Auth Pages (Login / Register)
+
+Design a modern authentication UI.
+Constraints:
+- Minimal fields
+- Error states visible
+- Loading states included
+- Accessible labels
+Return full component code.
+
+4. Landing Page Hero Section
+
+Design a conversion-focused hero section.
+Audience: [who]
+Goal: [signups / downloads]
+Include:
+- Headline
+- Subheadline
+- Primary CTA
+- Secondary CTA
+No stock images.
+
+5. Form-Heavy Page
+
+Design a form UI for [purpose].
+Rules:
+- Group related fields
+- Inline validation
+- Keyboard-friendly
+Return a reusable form component.
+
+SECTION B — COMPONENT-LEVEL PROMPTS
+
+6. Button System
+
+Create a button component system.
+Variants:
+- Primary
+- Secondary
+- Destructive
+States:
+- Hover
+- Disabled
+- Loading
+Return a reusable React component.
+
+
+7. Modal Component
+
+Build an accessible modal component.
+Requirements:
+- ESC to close
+- Focus trap
+- Overlay click closes modal
+Return full implementation.
+
+8. Card Component
+
+Design a reusable card component.
+Use cases:
+- Listing items
+- Stats
+- Actions
+Include hover states.
+
+9. Navbar
+
+Create a responsive navbar.
+Include:
+- Mobile hamburger menu
+- Active link states
+- Sticky behavior
+Return production-ready code.
+
+10. Sidebar Navigation
+
+Design a collapsible sidebar navigation.
+Include:
+- Icons
+- Active states
+- Smooth transitions
+
+SECTION C — UX BEHAVIOR & INTERACTIONS
+
+11. Empty States
+Design meaningful empty states for:
+- No data
+- Error
+- First-time user
+Return UI components for each.
+
+12. Loading States
+
+Implement skeleton loaders for:
+- Cards
+- Tables
+- Forms
+Avoid spinners where possible.
+
+13. Error Handling UI
+
+Design user-friendly error states.
+Include:
+- Inline errors
+- Toast notifications
+- Page-level failures
+
+14. Success Feedback
+
+Design success feedback UI.
+Include:
+- Visual confirmation
+- Auto-dismiss logic
+- Accessible alerts
+
+15. Confirmation Dialogs
+
+Create confirmation dialogs for destructive actions.
+Rules:
+- Clear language
+- Primary and secondary actions
+- Keyboard accessible
+
+SECTION D — DATA DISPLAY
+
+16. Table UI
+Design a responsive data table.
+Include:
+- Sorting
+- Pagination
+- Mobile fallback view
+
+17. List Views
+
+Create a list view for [items].
+Include:
+- Filters
+- Search input
+- Empty state
+
+18. Analytics Cards
+
+Design KPI metric cards.
+Include:
+- Trend indicators
+- Icons
+- Responsive grid layout
+
+19. Activity Feed
+
+Create an activity feed UI.
+Include:
+- Timestamps
+- Icons
+- Infinite scroll
+
+20. Profile Page
+
+Design a user profile page.
+Include:
+- Editable sections
+- Avatar upload
+- Role badges
+
+SECTION E — UX SYSTEMS & CONSISTENCY
+
+21. Design Tokens
+Create design tokens for:
+- Colors
+- Typography
+- Spacing
+Export as Tailwind config.
+
+22. Typography Scale
+
+Design a typography system.
+Include:
+- Headings
+- Body
+- Captions
+Ensure readability.
+
+23. Color System
+
+Create an accessible color palette.
+Include:
+- Primary
+- Secondary
+- Neutral
+- Error
+Ensure contrast ratios.
+
+24. Spacing & Grid
+
+Design a spacing and layout grid system.
+Mobile-first.
+
+SECTION F — ADVANCED UI PATTERNS
+
+25. Multi-Step Form
+Design a multi-step form UI.
+Include:
+- Progress indicator
+- Validation per step
+- Save draft support
+
+26. Drag and Drop
+
+Implement drag-and-drop UI for [use case].
+Ensure keyboard fallback.
+
+27. Search Experience
+
+Design an intelligent search UI.
+Include:
+- Instant feedback
+- Highlighted matches
+- No-results state
+
+28. Notification System
+
+Create a notification UI system.
+Include:
+- Toasts
+- Badge counters
+- Read/unread states
+
+29. Theme Switcher
+
+Implement light/dark mode toggle.
+Persist user preference.
+
+30. Settings Page
+Design a settings page UI.
+Group options logically.
+Include save feedback.
+
+SECTION G — QUALITY CONTROL PROMPTS
+
+
+31. UX Review
+
+Review this UI for usability issues.
+Focus on:
+- Accessibility
+- Cognitive load
+- Mobile usability
+Suggest concrete fixes.
+
+32. Frontend Performance
+
+Review this frontend UI for performance issues.
+Identify unnecessary re-renders and heavy components.
+
+33. Consistency Audit
+
+Audit this UI for consistency.
+Check spacing, typography, and interaction patterns.
+
+FINAL STRATEGIC ADVICE (IMPORTANT)
+
+These prompts work only if:
+
+You specify user type + goal
+
+You demand code, not explanations
+
+You reject complexity immediately
+
+Use these prompts as contracts, not requests.
