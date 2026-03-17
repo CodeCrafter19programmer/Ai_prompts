@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>PromptCraft — UI/UX Design Prompts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Mono:wght@300;400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f7f4ef;
+    --bg2: #efeae2;
+    --ink: #1a1714;
+    --ink2: #5a5550;
+    --ink3: #9a9490;
+    --accent: #c4521a;
+    --accent-bg: #fdf0e8;
+    --border: rgba(26,23,20,0.12);
+    --border-strong: rgba(26,23,20,0.25);
+    --card-bg: #fdfaf6;
+    --font-display: 'Playfair Display', serif;
+    --font-body: 'DM Sans', sans-serif;
+    --font-mono: 'DM Mono', monospace;
+    --r: 6px;
+    --transition: 220ms cubic-bezier(.4,0,.2,1);
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* ── NAV ──────────────────────────── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+    height: 64px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: -.01em;
+    color: var(--ink);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-count {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink3);
+    font-weight: 300;
+  }
+
+  /* ── HERO ─────────────────────────── */
+  .hero {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 96px 48px 80px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-label {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 16px;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -.02em;
+    color: var(--ink);
+    max-width: 520px;
+  }
+  .hero h1 em { font-style: italic; color: var(--accent); }
+  .hero-sub {
+    margin-top: 20px;
+    font-size: 15px;
+    color: var(--ink2);
+    line-height: 1.7;
+    max-width: 420px;
+    font-weight: 300;
+  }
+  .hero-stat {
+    text-align: right;
+    padding-bottom: 4px;
+  }
+  .hero-stat .big {
+    font-family: var(--font-display);
+    font-size: 64px;
+    font-weight: 700;
+    line-height: 1;
+    color: var(--ink);
+  }
+  .hero-stat .small {
+    font-size: 12px;
+    font-weight: 300;
+    color: var(--ink3);
+    margin-top: 4px;
+    font-family: var(--font-mono);
+    letter-spacing: .06em;
+  }
+
+  /* ── SEARCH + FILTER ─────────────── */
+  .controls {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 32px 48px 24px;
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 220px;
+  }
+  .search-icon {
+    position: absolute; left: 14px; top: 50%; transform: translateY(-50%);
+    width: 16px; height: 16px; opacity: .4;
+  }
+  .search-input {
+    width: 100%;
+    padding: 10px 14px 10px 40px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--r);
+    background: var(--card-bg);
+    font-family: var(--font-body);
+    font-size: 14px;
+    color: var(--ink);
+    outline: none;
+    transition: border-color var(--transition), box-shadow var(--transition);
+  }
+  .search-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(196,82,26,.1);
+  }
+  .search-input::placeholder { color: var(--ink3); }
+
+  .filter-pills {
+    display: flex; gap: 8px; flex-wrap: wrap;
+  }
+  .pill {
+    padding: 8px 16px;
+    border: 1px solid var(--border-strong);
+    border-radius: 100px;
+    background: transparent;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 400;
+    color: var(--ink2);
+    cursor: pointer;
+    transition: all var(--transition);
+    white-space: nowrap;
+  }
+  .pill:hover { border-color: var(--ink); color: var(--ink); }
+  .pill.active {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+
+  /* ── PROMPTS GRID ────────────────── */
+  .prompts-section {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 0 48px 120px;
+  }
+
+  .category-block { margin-bottom: 64px; }
+  .category-header {
+    display: flex; align-items: baseline; gap: 12px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 24px;
+  }
+  .category-name {
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 400;
+    color: var(--ink);
+  }
+  .category-name em { font-style: italic; color: var(--accent); }
+  .category-count {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink3);
+    font-weight: 300;
+  }
+
+  .cards-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .prompt-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 22px 22px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    transition: border-color var(--transition), transform var(--transition), box-shadow var(--transition);
+    cursor: default;
+    position: relative;
+    overflow: hidden;
+  }
+  .prompt-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0;
+    width: 3px; height: 100%;
+    background: var(--accent);
+    opacity: 0;
+    transition: opacity var(--transition);
+  }
+  .prompt-card:hover {
+    border-color: var(--border-strong);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(26,23,20,.06);
+  }
+  .prompt-card:hover::before { opacity: 1; }
+
+  .card-meta {
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-style {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 400;
+    letter-spacing: .1em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-bg);
+    padding: 3px 8px;
+    border-radius: 4px;
+  }
+  .card-difficulty {
+    font-size: 11px;
+    color: var(--ink3);
+    font-weight: 300;
+  }
+
+  .card-title {
+    font-family: var(--font-display);
+    font-size: 15px;
+    font-weight: 700;
+    line-height: 1.4;
+    color: var(--ink);
+  }
+
+  .card-prompt {
+    font-family: var(--font-mono);
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: var(--ink2);
+    font-weight: 300;
+    background: var(--bg2);
+    border-radius: var(--r);
+    padding: 12px 14px;
+    flex: 1;
+    white-space: pre-wrap;
+    word-break: break-word;
+  }
+
+  .card-actions {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-top: 2px;
+  }
+  .card-tags {
+    display: flex; gap: 6px; flex-wrap: wrap;
+  }
+  .tag {
+    font-size: 11px;
+    font-weight: 300;
+    color: var(--ink3);
+    background: var(--bg2);
+    border-radius: 4px;
+    padding: 2px 7px;
+  }
+  .copy-btn {
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 14px;
+    background: var(--ink);
+    color: var(--bg);
+    border: none;
+    border-radius: var(--r);
+    font-family: var(--font-body);
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all var(--transition);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .copy-btn:hover { background: var(--accent); }
+  .copy-btn.copied { background: #2d7a4a; }
+  .copy-btn svg { width: 13px; height: 13px; }
+
+  /* ── EMPTY STATE ─────────────────── */
+  .empty-state {
+    text-align: center;
+    padding: 80px 0;
+    display: none;
+  }
+  .empty-state.show { display: block; }
+  .empty-state h3 {
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .empty-state p { color: var(--ink3); font-size: 14px; }
+
+  /* ── FOOTER ──────────────────────── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 32px 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .footer-logo { font-family: var(--font-display); font-size: 14px; color: var(--ink2); }
+  .footer-logo span { color: var(--accent); }
+  .footer-note { font-size: 12px; color: var(--ink3); font-family: var(--font-mono); }
+
+  /* ── ANIMATIONS ──────────────────── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .hero         { animation: fadeUp .5s ease both; }
+  .controls     { animation: fadeUp .5s .08s ease both; }
+  .prompts-section { animation: fadeUp .5s .14s ease both; }
+
+  /* ── RESPONSIVE ──────────────────── */
+  @media (max-width: 720px) {
+    nav { padding: 0 20px; }
+    .hero, .controls, .prompts-section { padding-left: 20px; padding-right: 20px; }
+    .hero { grid-template-columns: 1fr; padding-top: 56px; }
+    .hero-stat { text-align: left; }
+    .cards-grid { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Prompt<span>Craft</span></a>
+  <span class="nav-count" id="total-count">— prompts</span>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div>
+    <div class="hero-label">UI/UX Design Prompts</div>
+    <h1>Build <em>beautiful</em> interfaces, faster.</h1>
+    <p class="hero-sub">A curated library of AI prompts for generating production-ready UI components across every major design aesthetic.</p>
+  </div>
+  <div class="hero-stat">
+    <div class="big" id="hero-count">—</div>
+    <div class="small">PROMPTS<br>READY TO USE</div>
+  </div>
+</section>
+
+<!-- CONTROLS -->
+<div class="controls">
+  <div class="search-wrap">
+    <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/>
+    </svg>
+    <input class="search-input" type="text" placeholder="Search prompts…" id="search-input"/>
+  </div>
+  <div class="filter-pills" id="filter-pills">
+    <button class="pill active" data-cat="all">All</button>
+  </div>
+</div>
+
+<!-- PROMPTS -->
+<main class="prompts-section" id="prompts-section"></main>
+
+<div class="empty-state" id="empty-state">
+  <h3>No prompts found</h3>
+  <p>Try a different search term or category.</p>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Prompt<span>Craft</span></span>
+  <span class="footer-note">UI/UX · Frontend · Design Systems</span>
+</footer>
+
+<script>
+const PROMPTS = [
+  // ── BUTTONS ─────────────────────────────────────────────
+  {
+    category: "Buttons",
+    style: "Minimalist",
+    difficulty: "Easy",
+    title: "Ghost button with hover fill",
+    tags: ["hover","outline","transition"],
+    prompt: `Create a ghost button with a transparent background and 1px border. On hover, smoothly fill the background with the brand color and invert the text. Include a subtle scale(1.02) transform and 200ms ease transition. No border-radius — keep edges sharp.`
+  },
+  {
+    category: "Buttons",
+    style: "Glassmorphism",
+    difficulty: "Medium",
+    title: "Frosted glass CTA button",
+    tags: ["glass","blur","backdrop"],
+    prompt: `Design a CTA button using glassmorphism: backdrop-filter blur(12px), semi-transparent white background (rgba 255,255,255,0.15), 1px border with rgba white at 30% opacity. Add a soft inner glow on hover using box-shadow with a white inset. Works best on gradient or image backgrounds.`
+  },
+  {
+    category: "Buttons",
+    style: "Neumorphism",
+    difficulty: "Medium",
+    title: "Soft-push neumorphic button",
+    tags: ["shadow","tactile","depth"],
+    prompt: `Build a neumorphic button on a #e0e5ec background. Resting state: box-shadow with a light source top-left (white, -4px -4px 10px) and shadow bottom-right (#a3b1c6, 4px 4px 10px). Active/pressed state: invert the shadows and reduce spread by 50% to simulate physical pressing. No border.`
+  },
+  {
+    category: "Buttons",
+    style: "Material",
+    difficulty: "Easy",
+    title: "Ripple effect button",
+    tags: ["ripple","material","animation"],
+    prompt: `Create a Material Design button with a JavaScript ripple effect. On click, inject a span element absolutely positioned at the click coordinates. Animate it from scale(0) to scale(4) with opacity fading from 0.3 to 0 over 600ms. Use clip: overflow-hidden on the button. Use elevation via box-shadow (0 2px 4px rgba(0,0,0,.3)).`
+  },
+  {
+    category: "Buttons",
+    style: "Retro / Y2K",
+    difficulty: "Hard",
+    title: "Beveled 3D retro button",
+    tags: ["3D","bevel","retro"],
+    prompt: `Design a Y2K-style beveled 3D button. Use border-style solid with lighter top/left borders and darker bottom/right borders to simulate depth. Add a pixel font (Press Start 2P or VT323). On active state, shift content 2px down and right, and invert the border shading. Use a bright saturated color like #00FFCC or #FF006E.`
+  },
+  {
+    category: "Buttons",
+    style: "Claymorphism",
+    difficulty: "Medium",
+    title: "Inflated clay button",
+    tags: ["3D","pastel","playful"],
+    prompt: `Create a claymorphism button: large border-radius (16px+), pastel background color, a multi-layered box-shadow that creates an inflated 3D look (outer shadow downward + inset highlight on top). On hover, slightly scale up (1.04) and deepen the shadow. Font should be rounded — use Nunito or Poppins Extra Bold.`
+  },
+  // ── CARDS ────────────────────────────────────────────────
+  {
+    category: "Cards",
+    style: "Minimalist",
+    difficulty: "Easy",
+    title: "Editorial content card",
+    tags: ["typography","hover","border"],
+    prompt: `Build a minimal content card: white background, 1px solid border (#e8e8e8), no border-radius (sharp corners). Inside: a small overline label in uppercase monospace, a large serif headline (Playfair or Lora), a short body snippet in light-weight sans-serif, and a subtle "Read more →" text link. On hover, add a 2px left border in the accent color.`
+  },
+  {
+    category: "Cards",
+    style: "Glassmorphism",
+    difficulty: "Medium",
+    title: "Floating glass profile card",
+    tags: ["glass","avatar","blur"],
+    prompt: `Design a profile card using glassmorphism over a gradient background. Card: background rgba(255,255,255,0.1), backdrop-filter blur(20px) saturate(180%), border 1px solid rgba(255,255,255,0.2), border-radius 20px. Include an avatar, name, title, and stat row. Add a subtle gradient border using border-image or a pseudo-element with a gradient stroke.`
+  },
+  {
+    category: "Cards",
+    style: "Neumorphism",
+    difficulty: "Hard",
+    title: "Inset stats card",
+    tags: ["inset","stats","depth"],
+    prompt: `Create a neumorphic stats card where the metric numbers appear "sunk into" the surface. Use an inset box-shadow (inset 3px 3px 7px #b8bec7, inset -3px -3px 7px #ffffff) on the stat containers. The card itself is an outward neumorphic surface. Background #dde1e7. Include an SVG sparkline inside an inset region.`
+  },
+  {
+    category: "Cards",
+    style: "Brutalism",
+    difficulty: "Easy",
+    title: "Black border brutalist card",
+    tags: ["border","offset","raw"],
+    prompt: `Build a brutalist card: white background, thick 3px solid black border, zero border-radius, and a 5px black offset shadow (box-shadow: 5px 5px 0 #000). On hover, shift the element 3px down and right while reducing the shadow offset accordingly — simulating a press into depth. Use a bold condensed sans-serif headline (Barlow Condensed, Anton).`
+  },
+  {
+    category: "Cards",
+    style: "Aurora",
+    difficulty: "Medium",
+    title: "Gradient mesh product card",
+    tags: ["gradient","mesh","glow"],
+    prompt: `Design a product card with an aurora gradient background (purple → pink → blue mesh). Use CSS @property and @keyframes to subtly animate the gradient hue shift over 8s. The card content (white text) sits in the lower 40% on a translucent dark overlay. Add a soft radial glow emanating from the card center on hover using a pseudo-element with filter: blur(40px).`
+  },
+  {
+    category: "Cards",
+    style: "Dark UI",
+    difficulty: "Medium",
+    title: "Terminal-style code card",
+    tags: ["dark","code","mono"],
+    prompt: `Create a dark UI card styled like a terminal/code editor. Background #0d0d14, border 1px solid #2a2a3a, border-radius 10px. Add a fake traffic-light dots row (red/yellow/green circles) at the top. Inside: syntax-highlighted code snippet using <span> elements with neon colors for keywords (purple), strings (green), comments (gray). Use JetBrains Mono or Fira Code.`
+  },
+  {
+    category: "Cards",
+    style: "Claymorphism",
+    difficulty: "Medium",
+    title: "Bubbly feature card",
+    tags: ["pastel","inflated","icon"],
+    prompt: `Build a claymorphism feature card with a large pastel-colored rounded icon container (border-radius 20px, inflated shadow), a bold rounded headline (Nunito 800), and a light body text. The entire card should have: background white, border-radius 24px, box-shadow: 0 20px 60px rgba(0,0,0,0.08), 0 0 0 2px rgba(255,255,255,0.6). On hover, scale(1.02) the icon container only.`
+  },
+  // ── NAVBARS ──────────────────────────────────────────────
+  {
+    category: "Navbars",
+    style: "Minimalist",
+    difficulty: "Easy",
+    title: "Floating pill navbar",
+    tags: ["sticky","pill","blur"],
+    prompt: `Create a minimalist floating navbar that becomes a centered pill after scrolling 80px. Transition from full-width with a bottom border to a centered rounded pill (border-radius: 100px) with a subtle frosted background (backdrop-filter blur(12px), rgba white 85%). Use CSS transitions on width, border-radius, and box-shadow. Links should be compact and spaced evenly inside the pill.`
+  },
+  {
+    category: "Navbars",
+    style: "Dark UI",
+    difficulty: "Medium",
+    title: "Sidebar dark navigation",
+    tags: ["sidebar","icons","active-state"],
+    prompt: `Design a dark collapsible sidebar nav: collapsed width 64px (icons only), expanded 220px on hover. Background #0f0f14, border-right 1px solid #1e1e2a. Active item: a left accent bar (3px solid #7c6ff7) + bg rgba(124,111,247,0.12). Icons use stroke style, 20px. Expand/collapse with a smooth width transition (300ms cubic-bezier). Include a user avatar section at the bottom.`
+  },
+  {
+    category: "Navbars",
+    style: "Glassmorphism",
+    difficulty: "Medium",
+    title: "Blurred top navigation",
+    tags: ["glass","sticky","blur"],
+    prompt: `Build a sticky glassmorphic top navbar. On scroll: background transitions from transparent to rgba(255,255,255,0.7) with backdrop-filter blur(16px) saturate(150%), and a 1px bottom border rgba(0,0,0,0.08). Include a logo, nav links with an animated underline on hover (scale X from 0 to 1), and a CTA button. Works against both light and image backgrounds.`
+  },
+  {
+    category: "Navbars",
+    style: "Brutalism",
+    difficulty: "Hard",
+    title: "Bold stacked brutalist nav",
+    tags: ["stacked","bold","raw"],
+    prompt: `Design a brutalist navigation with oversized typography. Nav items are displayed in a stacked left column on desktop (not horizontal). Each link is large (32–40px), bold, uppercase, with a full-width bottom border. Active/hover state fills the entire row with black and inverts text color to white — no rounding. Include a large decorative number counter beside each item (01, 02, 03).`
+  },
+  {
+    category: "Navbars",
+    style: "Swiss / International",
+    difficulty: "Medium",
+    title: "Grid-aligned editorial navbar",
+    tags: ["grid","editorial","swiss"],
+    prompt: `Create a Swiss-style editorial navbar aligned to a strict 12-column grid. Left: logo set in uppercase condensed type with a red accent rule above it. Center: navigation links in small-caps with generous tracking (0.15em). Right: a utility area with a search icon and language switcher. A strong 2px red top border runs the full viewport width. Everything sits on baseline grid — no arbitrary spacing.`
+  },
+  // ── FORMS ────────────────────────────────────────────────
+  {
+    category: "Forms",
+    style: "Minimalist",
+    difficulty: "Easy",
+    title: "Floating label input field",
+    tags: ["label","float","focus"],
+    prompt: `Build a form input with a floating label. Default: label sits inside the input as placeholder-style text (top: 50%, transform: translateY(-50%)). On focus or when value is non-empty: label transitions to a small size (12px), moves to the top edge (top: -10px), and changes color to the accent. Input border changes from #ddd to the accent color. Use only CSS + the :focus-within and :placeholder-shown technique.`
+  },
+  {
+    category: "Forms",
+    style: "Dark UI",
+    difficulty: "Medium",
+    title: "Terminal-style login form",
+    tags: ["terminal","auth","mono"],
+    prompt: `Design a dark login form that looks like a terminal prompt. Background #0a0a0f, inputs are borderless with only a 1px bottom border in #333 (like an underline input). Text is monospace green (#00ff88). The cursor inside active inputs blinks. Labels prefix with "> " in dim green. Submit button looks like a terminal command: background transparent, border 1px solid #00ff88, text "[ LOGIN ]" in monospace. Add a fake typing animation on page load.`
+  },
+  {
+    category: "Forms",
+    style: "Glassmorphism",
+    difficulty: "Medium",
+    title: "Glassy multi-step form",
+    tags: ["multi-step","progress","glass"],
+    prompt: `Create a multi-step glassmorphism form card. Card: backdrop-filter blur(20px), white 15% background, 1px rgba-white border, large border-radius. Top: a progress bar with filled segments per step (glass-style: semi-transparent filled vs unfilled). Each step reveals with a translateX slide-in animation. Navigation buttons: outline ghost style in white. Designed to sit over a colorful gradient or blurred image background.`
+  },
+  {
+    category: "Forms",
+    style: "Material",
+    difficulty: "Medium",
+    title: "Outlined Material text field",
+    tags: ["outlined","validation","material"],
+    prompt: `Build a Material Design outlined text field with full validation states. Default: 1px border, rounded (4px), label inside. Focused: label floats above and notches the border (use clip-path or a pseudo-element gap). Valid state: border turns green with a checkmark icon. Error state: border turns red, helper text appears below in red with a shake animation. Use only CSS and minimal JS for state toggling.`
+  },
+  // ── MODALS ───────────────────────────────────────────────
+  {
+    category: "Modals",
+    style: "Minimalist",
+    difficulty: "Easy",
+    title: "Clean confirmation dialog",
+    tags: ["dialog","confirm","overlay"],
+    prompt: `Create a minimal confirmation modal: white card, 400px wide, 24px padding, 8px border-radius, no decorative elements. Title in 20px medium weight, body text in #666, and two buttons (Cancel: outlined, Confirm: filled in black). Backdrop: rgba(0,0,0,0.4). Enter animation: scale from 0.95 to 1 + fade in over 180ms. Dismiss on backdrop click. Trap focus inside when open. Accessible role="dialog" with aria-labelledby.`
+  },
+  {
+    category: "Modals",
+    style: "Dark UI",
+    difficulty: "Hard",
+    title: "Command palette overlay",
+    tags: ["command","search","keyboard"],
+    prompt: `Build a VS Code-style command palette modal (Cmd+K). Dark background #1a1a2e, border 1px solid #2d2d4e, border-radius 12px, centered, max-width 560px. Top: a live search input with a search icon, monospace font, blinking cursor. Below: filterable list of commands with keyboard shortcut badges on the right (e.g. ⌘K). Active row highlighted with accent background. Arrow key navigation, Enter to select. Smooth slide-down from top on open.`
+  },
+  {
+    category: "Modals",
+    style: "Glassmorphism",
+    difficulty: "Medium",
+    title: "Frosted image lightbox",
+    tags: ["lightbox","image","blur"],
+    prompt: `Design a glassmorphic image lightbox. Backdrop: a blurred version of the image itself (use CSS filter blur on a scaled copy as background). Modal container: white 10% alpha, backdrop-filter blur(30px), border 1px solid rgba-white-20, border-radius 16px. Include prev/next arrows (ghost style, white border), an image counter in monospace, and a close button top-right. Animate open with scale(0.92) → scale(1) + opacity 0 → 1.`
+  },
+  // ── HERO SECTIONS ────────────────────────────────────────
+  {
+    category: "Hero Sections",
+    style: "Minimalist",
+    difficulty: "Medium",
+    title: "Typographic split-screen hero",
+    tags: ["split","typography","serif"],
+    prompt: `Design a split-screen hero: left 55% is a large serif heading (Playfair, 64px+) with an italic colored word, a short subheading in light sans-serif, and a CTA. Right 45% is a full-bleed image or color block with no padding. On scroll, the heading subtly parallaxes at 0.5x speed. On mobile, stack vertically with image on top. Include a thin horizontal rule between sections and generous white space.`
+  },
+  {
+    category: "Hero Sections",
+    style: "Aurora",
+    difficulty: "Hard",
+    title: "Animated gradient mesh hero",
+    tags: ["gradient","animation","glow"],
+    prompt: `Create a full-viewport hero with an animated aurora gradient background. Use multiple radial gradients (purple, pink, cyan) repositioned via @keyframes to create a flowing mesh effect. Text layer: large bold white headline with a text-shadow glow. Below the headline: a frosted glass input for email capture. Add a subtle floating particle effect using CSS box-shadows on a pseudo-element. Entire animation should be under 8s loop, smooth and non-distracting.`
+  },
+  {
+    category: "Hero Sections",
+    style: "Brutalism",
+    difficulty: "Medium",
+    title: "Raw editorial newspaper hero",
+    tags: ["editorial","grid","bold"],
+    prompt: `Build a brutalist newspaper-style hero. Use a strict asymmetric CSS grid: a giant headline spanning 7 of 12 columns in a bold condensed typeface (Barlow Condensed Black or Anton), a vertical rule divider, and a right column with a kicker label, date stamp, and body text. Black on white. No images — use a large outlined number or letter as a decorative element. On hover over the headline, the color inverts. Add a marquee ticker at the very bottom.`
+  },
+  // ── DASHBOARDS ───────────────────────────────────────────
+  {
+    category: "Dashboards",
+    style: "Dark UI",
+    difficulty: "Hard",
+    title: "Analytics dark dashboard layout",
+    tags: ["analytics","charts","stats"],
+    prompt: `Design the layout for a dark analytics dashboard. Background #0b0b12, sidebar #0f0f1a, cards #141420. Include: a KPI row with 4 stat cards (each with a metric, % change badge, and sparkline), a large area chart below (use Chart.js or SVG), and a recent activity table. Use neon accent colors for positive metrics (green), negative (red). Card borders: 1px solid #1e1e2a. Use Inter or DM Mono for data labels.`
+  },
+  {
+    category: "Dashboards",
+    style: "Minimalist",
+    difficulty: "Medium",
+    title: "Clean SaaS admin layout",
+    tags: ["admin","layout","sidebar"],
+    prompt: `Create a minimal SaaS dashboard layout: white background, 240px left sidebar with light gray bg (#f8f8f8), main content area. Sidebar: logo at top, nav items with active state (left border + bg tint), user profile section at bottom. Main area: a page header with title + action buttons, a 3-column stats row, and a data table. Use a restrained color palette: black, white, gray, and one blue accent (#2563EB) only for interactive elements.`
+  },
+  // ── BADGES & TAGS ────────────────────────────────────────
+  {
+    category: "Badges & Tags",
+    style: "Flat Design",
+    difficulty: "Easy",
+    title: "Semantic status badge set",
+    tags: ["status","color","semantic"],
+    prompt: `Create a complete badge/chip component set for status indicators: Success (green), Warning (amber), Error (red), Info (blue), and Neutral (gray). Each badge: pill shape (border-radius 100px), colored background at 15% opacity, matching text color at full saturation, an optional leading dot indicator (4px circle). Provide solid variants too. Export as reusable CSS classes (.badge-success, .badge-warning, etc.) with CSS custom properties.`
+  },
+  {
+    category: "Badges & Tags",
+    style: "Dark UI",
+    difficulty: "Easy",
+    title: "Neon glow tag components",
+    tags: ["neon","glow","dark"],
+    prompt: `Design a dark-mode tag component with neon glow variants. Background: #0f0f1a. Tags use a dark semi-transparent base with a colored border (1px) and a matching text-shadow + box-shadow glow effect. Colors: electric blue (#00d4ff), neon purple (#bf5fff), acid green (#39ff14), hot pink (#ff0090). Include hover state that intensifies the glow. Removable variant: include an × icon that fades in on hover.`
+  },
+  // ── TOOLTIPS & POPOVERS ──────────────────────────────────
+  {
+    category: "Tooltips",
+    style: "Minimalist",
+    difficulty: "Medium",
+    title: "Pure CSS directional tooltip",
+    tags: ["CSS","arrow","hover"],
+    prompt: `Build a pure CSS tooltip system with 4 directions (top, bottom, left, right). Use data-tooltip attribute and ::after/::before pseudo-elements — no JavaScript. The tooltip body is a dark rounded pill (background #1a1a1a, white text, 12px, padding 6px 12px). The arrow is a CSS triangle using border tricks. Animate in with a 150ms scale + fade from the origin direction. Include data-tooltip-dir="top|bottom|left|right" for directional control.`
+  },
+  // ── LOADERS & SKELETONS ──────────────────────────────────
+  {
+    category: "Loaders",
+    style: "Minimalist",
+    difficulty: "Medium",
+    title: "Skeleton screen card loader",
+    tags: ["skeleton","loading","shimmer"],
+    prompt: `Create a skeleton loading screen that matches a content card layout. Use gray placeholder blocks (background #e8e8e8, border-radius matching real content). Animate with a shimmer effect: a linear-gradient from #e8e8e8 through #f4f4f4 and back, moving left-to-right via backgroundPosition animation over 1.5s infinite. Match the exact block heights and spacing of the real card it replaces. Include a staggered animation-delay for multi-card grids.`
+  },
+  {
+    category: "Loaders",
+    style: "Dark UI",
+    difficulty: "Medium",
+    title: "Dot pulse neon loader",
+    tags: ["pulse","neon","animation"],
+    prompt: `Design a minimal neon dot-pulse loader for dark UIs. Three circles (8px), neon accent color (#7c6ff7). Animate with staggered scale + opacity keyframes: each dot pulses from scale(0.5) opacity(0.3) to scale(1.2) opacity(1) with 0.15s stagger between dots. Loop infinite. Include a larger variant (12px dots) and an inline variant (dots beside "Loading…" text in monospace). Works on dark backgrounds only.`
+  }
+];
+
+// ── Build UI ─────────────────────────────────────────────
+
+const categories = [...new Set(PROMPTS.map(p => p.category))];
+let activeCategory = 'all';
+let searchTerm = '';
+
+// Set counts
+document.getElementById('total-count').textContent = `${PROMPTS.length} prompts`;
+document.getElementById('hero-count').textContent = PROMPTS.length;
+
+// Build filter pills
+const pillsEl = document.getElementById('filter-pills');
+categories.forEach(cat => {
+  const btn = document.createElement('button');
+  btn.className = 'pill';
+  btn.dataset.cat = cat;
+  btn.textContent = cat;
+  btn.addEventListener('click', () => {
+    activeCategory = cat;
+    document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    render();
+  });
+  pillsEl.appendChild(btn);
+});
+
+document.querySelector('.pill[data-cat="all"]').addEventListener('click', () => {
+  activeCategory = 'all';
+  document.querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+  document.querySelector('.pill[data-cat="all"]').classList.add('active');
+  render();
+});
+
+// Search
+document.getElementById('search-input').addEventListener('input', e => {
+  searchTerm = e.target.value.toLowerCase();
+  render();
+});
+
+function copyPrompt(btn, text) {
+  navigator.clipboard.writeText(text).then(() => {
+    btn.classList.add('copied');
+    btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg> Copy prompt`;
+    }, 2000);
+  });
+}
+
+function render() {
+  const section = document.getElementById('prompts-section');
+  const emptyEl = document.getElementById('empty-state');
+  section.innerHTML = '';
+
+  const filtered = PROMPTS.filter(p => {
+    const matchesCat = activeCategory === 'all' || p.category === activeCategory;
+    const matchesSearch = !searchTerm ||
+      p.title.toLowerCase().includes(searchTerm) ||
+      p.style.toLowerCase().includes(searchTerm) ||
+      p.prompt.toLowerCase().includes(searchTerm) ||
+      p.tags.some(t => t.includes(searchTerm)) ||
+      p.category.toLowerCase().includes(searchTerm);
+    return matchesCat && matchesSearch;
+  });
+
+  if (filtered.length === 0) {
+    emptyEl.classList.add('show');
+    return;
+  }
+  emptyEl.classList.remove('show');
+
+  // Group by category
+  const grouped = {};
+  filtered.forEach(p => {
+    if (!grouped[p.category]) grouped[p.category] = [];
+    grouped[p.category].push(p);
+  });
+
+  Object.entries(grouped).forEach(([cat, prompts]) => {
+    const block = document.createElement('div');
+    block.className = 'category-block';
+    block.innerHTML = `
+      <div class="category-header">
+        <h2 class="category-name">${formatCategoryName(cat)}</h2>
+        <span class="category-count">${prompts.length} prompt${prompts.length !== 1 ? 's' : ''}</span>
+      </div>
+      <div class="cards-grid"></div>
+    `;
+    const grid = block.querySelector('.cards-grid');
+
+    prompts.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'prompt-card';
+      card.innerHTML = `
+        <div class="card-meta">
+          <span class="card-style">${p.style}</span>
+          <span class="card-difficulty">${p.difficulty}</span>
+        </div>
+        <div class="card-title">${p.title}</div>
+        <div class="card-prompt">${p.prompt}</div>
+        <div class="card-actions">
+          <div class="card-tags">${p.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+          <button class="copy-btn" onclick="copyPrompt(this, ${JSON.stringify(p.prompt).replace(/'/g, '&#39;')})">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+            Copy prompt
+          </button>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+
+    section.appendChild(block);
+  });
+}
+
+function formatCategoryName(cat) {
+  const parts = cat.split(' ');
+  if (parts.length > 1) {
+    return parts[0] + ' <em>' + parts.slice(1).join(' ') + '</em>';
+  }
+  return cat;
+}
+
+render();
+</script>
+</body>
+</html>
